@@ -143,3 +143,8 @@ kubectl get ingress
 ```bash
 curl --resolve "<ingress-host>:80:<ingress-address>" -i http://<ingress-host>/
 ```
+
+## If you need to delete
+```bash
+kubectl delete deployment k8s-microproject-deployment
+```
