@@ -50,7 +50,7 @@ The output should be 'Hello, Kubernetes!'
 2. Build your image with the `k8s-microproject` tag
 
 ```bash
-docker build . -t <username>/k3s-microproject
+docker build . -t <username>/k8s-microproject
 ```
 
 3. Publish the image on dockerhub
