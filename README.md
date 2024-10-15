@@ -148,3 +148,22 @@ curl --resolve "<ingress-host>:80:<ingress-address>" -i http://<ingress-host>/
 ```bash
 kubectl delete deployment k8s-microproject-deployment
 ```
+
+```bash
+kubectl delete ingress k8s-microproject-ingress
+```
+
+nginx admission config
+```bash
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+```
+
+## Run tunnel
+```bash
+minikube tunnel
+```
+
+## Minikube addon
+```bash
+minikube addons enable ingress
+```

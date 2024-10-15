@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8s-microproject-ingress
+spec:
+  rules:
+    - host: api.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: k8s-microproject-service
+                port: 
+                  number: 3000
