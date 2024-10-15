@@ -2,7 +2,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: k8s-microproject-ingress
+  annotations:
+    spec.ingressClassName: caddy
 spec:
+  tls:
+    - hosts:
+        - api.com
+      secretName: api-com-tls
   rules:
     - host: api.com
       http:
