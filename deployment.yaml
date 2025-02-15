@@ -19,6 +19,9 @@ spec:
           image: claquetteuuuh/k8s-microproject
           ports:
             - containerPort: 3000
+          volumeMounts:
+            - name: project-storage
+              mountPath: /usr/src/app/data
           livenessProbe:
             httpGet:
               path: /health
@@ -28,3 +31,7 @@ spec:
             timeoutSeconds: 2
             failureThreshold: 3
             successThreshold: 1
+      volumes:
+        - name: project-storage
+          persistentVolumeClaim:
+            claimName: k8s-microproject-pvc

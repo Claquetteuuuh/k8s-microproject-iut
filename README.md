@@ -172,7 +172,64 @@ Use -k to bypass tls verification
 curl --resolve "api.com:443:192.168.49.2" -ik https://api.com/
 ```
 
+### Step 7 - Add Liveness Probe
+We Updated `deployment.yaml` to include a liveness probe
+#### Verify the liveness probe is working
+```bash
+# Watch pod status
+kubectl get pods -w
 
+# Check pod details and events
+kubectl describe pod <pod-name>
+```
+#### Test the probe by simulating a failure
+
+```bash
+# Get pod name
+kubectl get pods
+
+# Temporarily modify the probe path to trigger failure
+kubectl patch deployment k8s-microproject-deployment --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/livenessProbe/httpGet/path", "value":"/non-existent"}]'
+
+# Watch the pods restart
+kubectl get pods -w
+
+# Restore the correct probe path
+kubectl patch deployment k8s-microproject-deployment --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/livenessProbe/httpGet/path", "value":"/"}]'
+```
+### Step 8 - Add Persistent Volume
+Apply the PV and PVC:
+```bash
+kubectl apply -f pv-pvc.yaml
+
+# check if it is running
+kubectl get pvc k8s-microproject-pvc
+```
+#### Test the PVC
+Verify Binding:
+```bash
+kubectl get pvc k8s-microproject-pvc
+```
+Check Volume in Pod:
+```bash
+kubectl exec -it <pod-name> -- sh
+ls /usr/src/app/data
+```
+Test Persistence inside the pod:
+```bash
+echo "Test data" > /usr/src/app/data/test.txt
+ls /usr/src/app/data
+```
+Delete the pod to force a restart:
+```bash
+kubectl delete pod <pod-name>
+```
+Then check the new pod to see the previous data:
+```bash
+kubectl exec -it <new-pod-name> -- sh
+ls /usr/src/app/data
+cat /usr/src/app/data/test.txt
+```
 ## If you need to delete
 ```bash
 kubectl delete deployment k8s-microproject-deployment
