@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-microproject-config
+data:
+  GREETING: "Hello Kubernetes with ConfigMap!"
+  PORT: "3000"

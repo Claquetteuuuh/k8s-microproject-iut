@@ -230,6 +230,37 @@ kubectl exec -it <new-pod-name> -- sh
 ls /usr/src/app/data
 cat /usr/src/app/data/test.txt
 ```
+
+### Step 9 - Add the ConfigMap
+Deploy the ConfigMap to your cluster by running:
+```bash
+kubectl apply -f configmap.yaml
+
+# After updating the deployment.yaml to add configMap
+kubectl apply -f deployment.yaml
+```
+#### Test the ConfigMap Integration
+```bash
+# Get a Running Pod Name:
+kubectl get pods
+
+# Exec into the Pod:
+kubectl exec -it <pod-name> -- sh
+# Replace <pod-name> with the name of one of your running pods.
+
+#Verify Environment Variables:
+#Inside the pod, run:
+
+echo $GREETING
+echo $PORT
+```
+You should see the following output:
+```bash
+Hello Kubernetes with ConfigMap!
+3000
+```
+
+
 ## If you need to delete
 ```bash
 kubectl delete deployment k8s-microproject-deployment

@@ -19,6 +19,9 @@ spec:
           image: claquetteuuuh/k8s-microproject
           ports:
             - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: k8s-microproject-config
           volumeMounts:
             - name: project-storage
               mountPath: /usr/src/app/data
