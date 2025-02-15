@@ -1,3 +1,9 @@
+### Team
+- Thomas Biabiany aka "Claquetteuuuh"
+- Gatta Ba aka "byood"
+- Felmon Tewelde Habtay aka "filex" 
+- Abd-el-rahmen Gheribi aka "TawahinBeirut"
+
 ## Steps
 
 ### Step 1 - Initial project setup
