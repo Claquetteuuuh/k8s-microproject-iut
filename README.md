@@ -32,7 +32,7 @@ npm install
 2. Run the application
 
 ```
-node app.ts
+node app.js
 ```
 
 3. Send a GET request to the exposed endpoint
