@@ -259,7 +259,45 @@ You should see the following output:
 Hello Kubernetes with ConfigMap!
 3000
 ```
+### Step 10 - Add a StatefulSet
+If you want each pod to get a stable identity and its own persistent storage. Create a StatefulSet Manifest in `statefulset.yaml`
+Deploy the StatefulSet by running:
+```bash
+kubectl apply -f statefulset.yaml
+```
+#### Verify the StatefulSet and Pods
 
+Check that your StatefulSet and pods are created and running:
+```bash
+kubectl get statefulset
+kubectl get pods -l app=k8s-microproject
+```
+You should see pods named similar to k8s-microproject-statefulset-0, k8s-microproject-statefulset-1, etc.
+
+#### Test Persistence and Environment Variables
+```bash
+# Exec into one of the Pods:
+
+kubectl exec -it k8s-microproject-statefulset-0 -- sh
+
+# Verify Environment Variables:
+# Inside the pod, run:
+echo $GREETING
+echo $PORT
+```bash
+
+You should see:
+```bash
+Hello Kubernetes with ConfigMap!
+3000
+```
+Check Persistent Storage:
+```bash
+# List the files in the mounted directory:
+ls /usr/src/app/data
+```
+
+If you used the init container to copy data, you may see the pre-populated files. Otherwise, the directory might be empty until your application writes data.
 
 ## If you need to delete
 ```bash

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: k8s-microproject-statefulset
+  labels:
+    app: k8s-microproject
+spec:
+  serviceName: "k8s-microproject-service"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-microproject
+  template:
+    metadata:
+      labels:
+        app: k8s-microproject
+    spec:
+      containers:
+        - name: microproject
+          image: claquetteuuuh/k8s-microproject
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: k8s-microproject-config
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/app/data
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi
